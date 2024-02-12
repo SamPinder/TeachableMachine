@@ -22,9 +22,8 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(320, 240);
-  // Start classifying
-  // The sound model will continuously listen to the microphone
+  var canvas = createCanvas(416, 260);
+  canvas.parent('sketch-holder');
   classifier.classify(gotResult);
 }
 
