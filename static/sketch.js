@@ -9,11 +9,12 @@ let soundModel = 'https://teachablemachine.withgoogle.com/models/YZL7EoS8n/';
 
 let gameState = 0;
 let gameStartTime = 0;
-let gameDuration = 5; // start counting at 0
+let gameDuration = 30; // start counting at 0
 
  let randomCommand = "";
- // let commands = ["Snap", "Clap", "Click"];
- let commands = ["Clap"];
+ let previousCommand = "";
+ let commands = ["Snap", "Clap", "Click"];
+ let points = 0;
 
 function preload() {
   // Load the model
@@ -54,20 +55,33 @@ function startGame(){
   text("Welcome to Snap-It! Click anywhere to play.", width/2, height/2)
 }
 
-function playGame(){
-  if(randomCommand === "") {
-    randomCommand = commands[Math.floor(Math.random() * commands.length)];
-  }
-  background(255,255,255);
-  fill(0);
-  textAlign(CENTER);
-  textSize(16);
-  text(randomCommand, width/2,height/2);
-  if(randomCommand === "Click") {
-    textSize(10)
-    text("Click means make a sound like a balloon is popping", width/2, 150);
-  }
-  if(label === randomCommand) randomCommand = "";
+function playGame() {
+    background(255, 255, 255);
+    fill(0);
+    textAlign(CENTER);
+    textSize(16);
+
+    if (label === "listening...") {
+        text("Waiting for model...", width / 2, height / 2);
+        gameStartTime = timeElapsed;
+        return;
+    }
+
+    if (randomCommand === "") {
+      let availableCommands = commands.filter((value) => {return value !== previousCommand});
+      randomCommand = commands[Math.floor(Math.random() * commands.length)];
+    }
+    text(randomCommand, width / 2, height / 2);
+    if (randomCommand === "Click") {
+        textSize(10);
+        text("Click means make a sound like a balloon is popping", width / 2, 150);
+    }
+
+    if (label === randomCommand) {
+      previousCommand = randomCommand;
+      randomCommand = "";
+      points++;
+    }
 }
 
 function finishGame(){
@@ -83,11 +97,11 @@ function drawTime(){
   fill(0);
   textAlign(LEFT);
   textSize(10);
-  text("Time Elapsed: " + timeElapsed, 8,15);
-  if(gameStartTime){
+  if(gameState === 1){
     let gameTimeElapsed = gameDuration - (timeElapsed - gameStartTime);
-    text("Time Remaining: " +  gameTimeElapsed, 8,30);
+    text("Time Remaining: " +  gameTimeElapsed, 8,15);
   }
+  text(points, 8, 30);
 
   // test to see if gameDuration is up
   if(timeElapsed - gameStartTime >= gameDuration){
@@ -104,6 +118,8 @@ function mousePressed(){
     gameStartTime = round(millis()/1000);
   }
   else if(gameState === 2) {
+    points = 0;
+    gameStartTime = timeElapsed;
     gameState = 0;
   }
 
@@ -116,6 +132,6 @@ function gotResult(error, results) {
     return;
   }
   // The results are in an array ordered by confidence.
-  // console.log(results[0]);
+   console.log(results[0]);
   label = results[0].label;
 }
