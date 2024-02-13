@@ -31,7 +31,6 @@ function draw() {
   background(0);
   // Draw the label in the canvas
   fill(255);
-  textFont('Trebuchet MS')
   textSize(32);
   textAlign(CENTER, CENTER);
   text(label, width / 2, height / 2);
@@ -48,7 +47,7 @@ function draw() {
 
 
 function startGame(){
-  background(0);
+  background(50);
   fill(255)
   textSize(16);
   textAlign(CENTER);
@@ -56,7 +55,7 @@ function startGame(){
 }
 
 function playGame() {
-    background(255, 255, 0);
+    background(255, 255, 255);
     fill(0);
     textAlign(CENTER);
     textSize(16);
@@ -85,10 +84,10 @@ function playGame() {
 }
 
 function finishGame(){
-  background(0, 0, 255);
+  background(255,0,0);
   textAlign(CENTER);
   textSize(20);
-  text("Time's up! Click to play again.", width/2,height/2);
+  text("GAME OVER\nCLICK TO PLAY AGAIN", width/2,height/2);
 
 }
 
@@ -101,7 +100,7 @@ function drawTime(){
     let gameTimeElapsed = gameDuration - (timeElapsed - gameStartTime);
     text("Time Remaining: " +  gameTimeElapsed, 8,15);
   }
-  text("Points: " + points, 8, 30);
+  text(points, 8, 30);
 
   // test to see if gameDuration is up
   if(timeElapsed - gameStartTime >= gameDuration){
