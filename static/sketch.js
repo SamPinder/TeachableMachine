@@ -49,6 +49,7 @@ function draw() {
 function startGame(){
   background(50);
   fill(255)
+  textFont('Trebuchet MS')
   textSize(16);
   textAlign(CENTER);
   text("Welcome to Snap-It! Click anywhere to play.", width/2, height/2)
@@ -57,6 +58,7 @@ function startGame(){
 function playGame() {
     background(255, 255, 255);
     fill(0);
+    textFont('Trebuchet MS')
     textAlign(CENTER);
     textSize(16);
 
@@ -85,6 +87,7 @@ function playGame() {
 
 function finishGame(){
   background(255,0,0);
+  textFont('Trebuchet MS')
   textAlign(CENTER);
   textSize(20);
   text("GAME OVER\nCLICK TO PLAY AGAIN", width/2,height/2);
